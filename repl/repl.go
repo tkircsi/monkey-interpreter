@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"io"
+	"strings"
 
 	"github.com/tkircsi/monkey/lexer"
 	"github.com/tkircsi/monkey/token"
@@ -23,6 +24,10 @@ func Start(in io.Reader, out io.Writer) {
 		}
 
 		line := scanner.Text()
+		if strings.Trim(line, " ") == "exit" {
+			return
+		}
+
 		l := lexer.New(line)
 
 		for tok := l.NextToken(); tok.Type != token.EOF; tok = l.NextToken() {
